@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Blog Cá Nhân | Lê Nhật Minh</title>
+
+    <!-- Bootstrap 5 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- CSS riêng -->
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #111827;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 24px;
+        }
+
+        .navbar .nav-link {
+            color: white;
+            margin-left: 10px;
+            transition: 0.3s;
+        }
+
+        .navbar .nav-link:hover {
+            color: #0dcaf0;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(
+                    rgba(17, 24, 39, 0.75),
+                    rgba(17, 24, 39, 0.75)
+                ),
+                url("https://images.unsplash.com/photo-1516321318423-f06f85e504b3")
+                center/cover;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 55px;
+            font-weight: bold;
+        }
+
+        .hero p {
+            font-size: 20px;
+            max-width: 650px;
+        }
+
+        .btn-custom {
+            background: #0dcaf0;
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            transition: 0.3s;
+        }
+
+        .btn-custom:hover {
+            background: #0aa2c0;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Section */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-weight: bold;
+            color: #111827;
+        }
+
+        .section-title p {
+            color: #6c757d;
+        }
+
+        /* About */
+        .about-img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .about-content h3 {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        /* Hobby */
+        .hobby-card {
+            background: white;
+            padding: 30px 20px;
+            border-radius: 15px;
+            text-align: center;
+            height: 100%;
+            transition: 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+        }
+
+        .hobby-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .hobby-card i {
+            font-size: 45px;
+            color: #0dcaf0;
+            margin-bottom: 20px;
+        }
+
+        .hobby-card h4 {
+            font-weight: bold;
+        }
+
+        /* Blog */
+        .blog-card {
+            background: white;
+            border-radius: 18px;
+            overflow: hidden;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: 0.35s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .blog-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            display: block;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.08);
+        }
+
+        .blog-date {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(3px);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 30px;
+        }
+
+        .blog-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .blog-content h4 {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+
+        .blog-excerpt {
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+
+        /* Nội dung mở rộng: nằm giữa đoạn tóm tắt và nút, để nút luôn
+           hiển thị bên dưới văn bản vừa được mở ra */
+        .blog-more {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            margin-top: 0;
+            transition: max-height 0.45s ease, opacity 0.35s ease, margin-top 0.35s ease, padding-top 0.35s ease;
+        }
+
+        .blog-more p {
+            color: #6c757d;
+            margin: 0;
+        }
+
+        .blog-more.show {
+            max-height: 400px;
+            opacity: 1;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed #dee2e6;
+        }
+
+        .blog-toggle {
+            align-self: flex-start;
+            margin-top: 18px;
+            background: transparent;
+            border: 2px solid #0dcaf0;
+            color: #0dcaf0;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 7px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+        }
+
+        .blog-toggle:hover {
+            background: #0dcaf0;
+            color: white;
+        }
+
+        .blog-toggle i {
+            transition: transform 0.3s ease;
+        }
+
+        .blog-toggle.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Gallery */
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: 0.3s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.03);
+            filter: brightness(80%);
+        }
+
+        /* Skills */
+        .skill {
+            margin-bottom: 25px;
+        }
+
+        .skill-title {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            height: 10px;
+            border-radius: 10px;
+        }
+
+        /* Contact */
+        .contact-box {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            font-size: 25px;
+            color: #0dcaf0;
+            margin-right: 15px;
+        }
+
+        /* Footer */
+        footer {
+            background: #111827;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 22px;
+            margin: 0 8px;
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: #0dcaf0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                text-align: center;
+            }
+
+            .hero h1 {
+                font-size: 38px;
+            }
+
+            .hero p {
+                font-size: 17px;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+
+        <a class="navbar-brand" href="#home">
+            <i class="bi bi-person-circle"></i>
+            Lê Nhật Minh
+        </a>
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menu"
+        >
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menu">
+            <ul class="navbar-nav ms-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#home">Trang chủ</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">Giới thiệu</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#hobby">Sở thích</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#blog">Blog</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#gallery">Hình ảnh</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#skills">Kỹ năng</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Liên hệ</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-8">
+
+                <p class="mb-2">
+                    👋 Xin chào, tôi là
+                </p>
+
+                <h1>Lê Nhật Minh</h1>
+
+                <h3 class="mb-4">
+                    Sinh viên Công nghệ thông tin | Yêu thích lập trình và công nghệ
+                </h3>
+
+                <p>
+                    Chào mừng bạn đến với blog cá nhân của tôi.
+                    Đây là nơi tôi chia sẻ những câu chuyện,
+                    sở thích, những điều tôi học được và những
+                    khoảnh khắc đáng nhớ trong cuộc sống.
+                </p>
+
+                <a href="#about" class="btn btn-custom mt-3">
+                    Khám phá về tôi
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section id="about">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Giới thiệu về tôi</h2>
+
+            <p>
+                Một vài thông tin nhỏ về bản thân tôi
+            </p>
+
+        </div>
+
+        <div class="row align-items-center">
+
+            <div class="col-md-5 mb-4">
+
+                <img
+                    src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e"
+                    class="about-img"
+                    alt="Ảnh đại diện"
+                >
+
+            </div>
+
+            <div class="col-md-7">
+
+                <div class="about-content">
+
+                    <h3>Xin chào! Tôi là Lê Nhật Minh 👋</h3>
+
+                    <p>
+                        Tôi hiện đang là sinh viên ngành Khoa học Máy tính. 
+                        Tôi yêu thích công nghệ, lập trình
+                        và luôn muốn tìm hiểu những kiến thức mới.
+                    </p>
+
+                    <p>
+                        Tôi tạo trang blog này để lưu lại những trải
+                        nghiệm trong quá trình học tập cũng như chia sẻ
+                        những điều thú vị trong cuộc sống.
+                    </p>
+
+                    <div class="info-box">
+
+                        <div class="row">
+
+                            <div class="col-md-6">
+                                <p>
+                                    <strong>🎓 Nghề nghiệp:</strong><br>
+                                    Sinh viên Khoa học Máy tính
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p>
+                                    <strong>📍 Địa điểm:</strong><br>
+                                    TP. Đồng Nai
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p>
+                                    <strong>💻 Chuyên ngành:</strong><br>
+                                    Khoa học Máy tính
+                                </p>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p>
+                                    <strong>📧 Email:</strong><br>
+                                    52400215@student.tdtu.edu.vn
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= HOBBY ================= -->
+
+<section id="hobby" class="bg-light">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Sở thích của tôi</h2>
+
+            <p>
+                Những điều tôi thường làm khi có thời gian rảnh
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+
+                <div class="hobby-card">
+
+                    <i class="bi bi-code-slash"></i>
+
+                    <h4>Lập trình</h4>
+
+                    <p>
+                        Tôi thích viết code, xây dựng website
+                        và tìm hiểu các công nghệ mới.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="hobby-card">
+
+                    <i class="bi bi-controller"></i>
+
+                    <h4>Chơi game</h4>
+
+                    <p>
+                        Chơi game giúp tôi giải trí và thư giãn
+                        sau những giờ học tập.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="hobby-card">
+
+                    <i class="bi bi-camera"></i>
+
+                    <h4>Chụp ảnh</h4>
+
+                    <p>
+                        Tôi thích lưu lại những khoảnh khắc
+                        đẹp trong cuộc sống.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-3">
+
+                <div class="hobby-card">
+
+                    <i class="bi bi-music-note-beamed"></i>
+
+                    <h4>Âm nhạc</h4>
+
+                    <p>
+                        Nghe nhạc là cách tôi thư giãn và
+                        lấy lại năng lượng.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= BLOG ================= -->
+
+<section id="blog">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Blog & Tâm sự</h2>
+
+            <p>
+                Một vài câu chuyện và suy nghĩ của tôi
+            </p>
+
+        </div>
+
+        <div class="row g-4">
+
+            <!-- Blog 1 -->
+
+            <div class="col-md-4">
+
+                <div class="blog-card">
+
+                    <div class="blog-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+                            alt="Học lập trình"
+                        >
+                        <span class="blog-date">20/08/2026</span>
+                    </div>
+
+                    <div class="blog-content">
+
+                        <h4>Hành trình học lập trình</h4>
+
+                        <p class="blog-excerpt">
+                            Khi mới bắt đầu học lập trình, tôi cảm thấy
+                            có rất nhiều thứ khó hiểu. Tuy nhiên, càng
+                            học tôi càng nhận ra rằng chỉ cần kiên trì
+                            thì mọi vấn đề đều có thể từng bước giải quyết.
+                        </p>
+
+                        <div class="blog-more">
+                            <p>
+                                Tôi bắt đầu từ những bài học rất nhỏ, từ việc làm quen với
+                                các thẻ HTML, chỉnh từng màu sắc trong CSS cho đến tự sửa
+                                những lỗi đầu tiên. Mỗi dòng code chạy đúng đều cho tôi thêm
+                                một chút tự tin, và chính những tiến bộ nhỏ ấy khiến tôi muốn
+                                tiếp tục học mỗi ngày.
+                            </p>
+                        </div>
+
+                        <button type="button" class="blog-toggle">
+                            <span class="toggle-text">Đọc thêm</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Blog 2 -->
+
+            <div class="col-md-4">
+
+                <div class="blog-card">
+
+                    <div class="blog-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1499750310107-5fef28a66643"
+                            alt="Học tập"
+                        >
+                        <span class="blog-date">15/08/2026</span>
+                    </div>
+
+                    <div class="blog-content">
+
+                        <h4>Những ngày làm sinh viên</h4>
+
+                        <p class="blog-excerpt">
+                            Cuộc sống sinh viên có rất nhiều điều thú vị.
+                            Có những ngày học tập rất vui nhưng cũng có
+                            những lúc áp lực vì bài tập và deadline.
+                        </p>
+
+                        <div class="blog-more">
+                            <p>
+                                Những buổi học nhóm, những lần chạy deadline và cả các cuộc
+                                trò chuyện sau giờ học đã giúp tôi trưởng thành hơn. Nhờ vậy,
+                                tôi học được cách sắp xếp thời gian, chia sẻ áp lực và biết nhờ
+                                hỗ trợ đúng lúc thay vì cố gắng một mình.
+                            </p>
+                        </div>
+
+                        <button type="button" class="blog-toggle">
+                            <span class="toggle-text">Đọc thêm</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Blog 3 -->
+
+            <div class="col-md-4">
+
+                <div class="blog-card">
+
+                    <div class="blog-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30"
+                            alt="Cuộc sống"
+                        >
+                        <span class="blog-date">10/08/2026</span>
+                    </div>
+
+                    <div class="blog-content">
+
+                        <h4>Hãy tận hưởng cuộc sống</h4>
+
+                        <p class="blog-excerpt">
+                            Đôi khi chúng ta quá tập trung vào tương lai
+                            mà quên mất việc tận hưởng những điều nhỏ
+                            bé đang xảy ra trong hiện tại.
+                        </p>
+
+                        <div class="blog-more">
+                            <p>
+                                Một ly cà phê, một bản nhạc yêu thích hay vài phút ngắm trời
+                                cũng có thể làm ngày dài trở nên nhẹ nhàng. Khi chậm lại để
+                                cảm nhận những điều ấy, tôi hiểu rằng hạnh phúc đôi khi chỉ là
+                                nhận ra mình đang có mặt trọn vẹn trong hiện tại.
+                            </p>
+                        </div>
+
+                        <button type="button" class="blog-toggle">
+                            <span class="toggle-text">Đọc thêm</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Blog 4 -->
+
+            <div class="col-md-4">
+
+                <div class="blog-card">
+
+                    <div class="blog-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1456324504439-367cee3b3c32"
+                            alt="Ghi chú và đọc sách"
+                        >
+                        <span class="blog-date">05/08/2026</span>
+                    </div>
+
+                    <div class="blog-content">
+
+                        <h4>Học cách bắt đầu lại</h4>
+
+                        <p class="blog-excerpt">
+                            Không phải ngày nào tôi cũng có động lực. Có những lúc tôi chỉ
+                            cố gắng hoàn thành một việc nhỏ để giữ mình đi tiếp.
+                        </p>
+
+                        <div class="blog-more">
+                            <p>
+                                Tôi nhận ra bắt đầu lại không có nghĩa là quay về con số
+                                không, bởi những gì đã trải qua vẫn là kinh nghiệm đồng hành
+                                cùng mình. Vì thế, tôi chỉ cần chọn một bước đủ nhỏ để thực
+                                hiện ngay hôm nay rồi kiên nhẫn xây lại nhịp điệu của mình.
+                            </p>
+                        </div>
+
+                        <button type="button" class="blog-toggle">
+                            <span class="toggle-text">Đọc thêm</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Blog 5 -->
+
+            <div class="col-md-4">
+
+                <div class="blog-card">
+
+                    <div class="blog-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1499750310107-5fef28a66643"
+                            alt="Làm việc và tập trung"
+                        >
+                        <span class="blog-date">01/08/2026</span>
+                    </div>
+
+                    <div class="blog-content">
+
+                        <h4>Một góc nhỏ để tập trung</h4>
+
+                        <p class="blog-excerpt">
+                            Không gian học tập ảnh hưởng đến tâm trạng nhiều hơn tôi từng
+                            nghĩ. Một góc bàn gọn gàng khiến việc bắt đầu dễ dàng hơn.
+                        </p>
+
+                        <div class="blog-more">
+                            <p>
+                                Tôi thường dọn bàn, tắt thông báo và chia công việc thành
+                                những khoảng ngắn để dễ bắt đầu hơn. Sau mỗi khoảng tập trung,
+                                vài phút nghỉ giúp đầu óc nhẹ hơn, nhờ đó tôi có thể quay lại
+                                công việc với sự tỉnh táo mà hiệu quả vẫn được giữ nguyên.
+                            </p>
+                        </div>
+
+                        <button type="button" class="blog-toggle">
+                            <span class="toggle-text">Đọc thêm</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Blog 6 -->
+
+            <div class="col-md-4">
+
+                <div class="blog-card">
+
+                    <div class="blog-img-wrap">
+                        <img
+                            src="https://images.unsplash.com/photo-1500534623283-312aade485b7"
+                            alt="Đi dạo và suy nghĩ"
+                        >
+                        <span class="blog-date">28/07/2026</span>
+                    </div>
+
+                    <div class="blog-content">
+
+                        <h4>Những điều tôi học từ một chuyến đi</h4>
+
+                        <p class="blog-excerpt">
+                            Rời khỏi màn hình một chút giúp tôi nhìn lại bản thân và nhận ra
+                            mình không cần phải vội vàng trong mọi chuyện.
+                        </p>
+
+                        <div class="blog-more">
+                            <p>
+                                Một chuyến đi ngắn cho tôi thêm thời gian quan sát, lắng nghe
+                                và trò chuyện mà không bị cuốn theo nhịp sống quen thuộc. Tôi
+                                mang về không chỉ là những bức ảnh đẹp, mà còn là cảm giác biết
+                                ơn với những điều bình thường đang hiện diện quanh mình.
+                            </p>
+                        </div>
+
+                        <button type="button" class="blog-toggle">
+                            <span class="toggle-text">Đọc thêm</span>
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= GALLERY ================= -->
+
+<section id="gallery" class="bg-light">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Góc hình ảnh 📷</h2>
+
+            <p>
+                Một số hình ảnh và khoảnh khắc tôi yêu thích
+            </p>
+
+        </div>
+
+        <div class="row g-4 gallery">
+
+            <div class="col-md-4">
+
+                <img
+                    src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4"
+                    alt="Học tập"
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <img
+                    src="https://images.unsplash.com/photo-1500534623283-312aade485b7"
+                    alt="Du lịch"
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <img
+                    src="https://images.unsplash.com/photo-1517841905240-472988babdf9"
+                    alt="Cuộc sống"
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <img
+                    src="https://images.unsplash.com/photo-1497366754035-f200968a6e72"
+                    alt="Làm việc"
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <img
+                    src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f"
+                    alt="Bạn bè"
+                >
+
+            </div>
+
+            <div class="col-md-4">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511988617509-a57c8a288659"
+                    alt="Khoảnh khắc"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SKILLS ================= -->
+
+<section id="skills">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Kỹ năng</h2>
+
+            <p>
+                Những công nghệ tôi đang học tập
+            </p>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-8">
+
+                <div class="skill">
+
+                    <div class="skill-title">
+                        <span>HTML / CSS</span>
+                        <span>85%</span>
+                    </div>
+
+                    <div class="progress">
+                        <div
+                            class="progress-bar bg-info"
+                            style="width: 85%"
+                        ></div>
+                    </div>
+
+                </div>
+
+
+                <div class="skill">
+
+                    <div class="skill-title">
+                        <span>Bootstrap</span>
+                        <span>80%</span>
+                    </div>
+
+                    <div class="progress">
+                        <div
+                            class="progress-bar bg-info"
+                            style="width: 80%"
+                        ></div>
+                    </div>
+
+                </div>
+
+
+                <div class="skill">
+
+                    <div class="skill-title">
+                        <span>PHP</span>
+                        <span>70%</span>
+                    </div>
+
+                    <div class="progress">
+                        <div
+                            class="progress-bar bg-info"
+                            style="width: 70%"
+                        ></div>
+                    </div>
+
+                </div>
+
+
+                <div class="skill">
+
+                    <div class="skill-title">
+                        <span>Python</span>
+                        <span>75%</span>
+                    </div>
+
+                    <div class="progress">
+                        <div
+                            class="progress-bar bg-info"
+                            style="width: 75%"
+                        ></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section id="contact" class="bg-light">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <h2>Liên hệ với tôi</h2>
+
+            <p>
+                Nếu bạn muốn trò chuyện hoặc chia sẻ điều gì đó
+            </p>
+
+        </div>
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-8">
+
+                <div class="contact-box">
+
+                    <div class="contact-item">
+
+                        <i class="bi bi-envelope-fill"></i>
+
+                        <div>
+                            <strong>Email</strong>
+                            <br>
+                            52400215@student.tdtu.edu.vn
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <i class="bi bi-telephone-fill"></i>
+
+                        <div>
+                            <strong>Điện thoại</strong>
+                            <br>
+                            0123 456 789
+                        </div>
+
+                    </div>
+
+
+                    <div class="contact-item">
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                        <div>
+                            <strong>Địa chỉ</strong>
+                            <br>
+                            Thành phố Hồ Chí Minh
+                        </div>
+
+                    </div>
+
+
+                    <form>
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Họ và tên
+                                </label>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Nhập họ tên"
+                                >
+
+                            </div>
+
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Email
+                                </label>
+
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    placeholder="Nhập email"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Nội dung
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                rows="5"
+                                placeholder="Viết lời nhắn..."
+                            ></textarea>
+
+                        </div>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-custom"
+                        >
+                            <i class="bi bi-send"></i>
+                            Gửi tin nhắn
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container">
+
+        <h4>Lê Nhật Minh Blog</h4>
+
+        <p>
+            Cảm ơn bạn đã ghé thăm trang web của tôi ❤️
+        </p>
+
+        <div class="social-icons">
+
+            <a href="#">
+                <i class="bi bi-facebook"></i>
+            </a>
+
+            <a href="#">
+                <i class="bi bi-instagram"></i>
+            </a>
+
+            <a href="#">
+                <i class="bi bi-github"></i>
+            </a>
+
+            <a href="#">
+                <i class="bi bi-youtube"></i>
+            </a>
+
+        </div>
+
+        <hr>
+
+        <p class="mb-0">
+            © 2026 Lê Nhật Minh. All Rights Reserved.
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+<!-- Blog: Đọc thêm / Thu gọn -->
+<script>
+    document.querySelectorAll(".blog-toggle").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+            var more = btn.previousElementSibling;
+            var label = btn.querySelector(".toggle-text");
+            var isOpen = more.classList.toggle("show");
+
+            btn.classList.toggle("active", isOpen);
+            label.textContent = isOpen ? "Thu gọn" : "Đọc thêm";
+        });
+    });
+</script>
+
+</body>
+</html>
